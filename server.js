@@ -22,7 +22,7 @@ app.get("/getnews", function(req, res)
 	axios.get("https://www.theonion.com/").then(function(response)
 	{
 		let $ = cheerio.load(response.data);
-
+	
 		$("div.sc-1pw4fyi-0").each(function(i, element)
 		{
 			let result = {};
