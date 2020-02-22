@@ -32,7 +32,6 @@ app.get("/getnews", function(req, res)
 			result.link = $(this)
         		.children("a")
         		.attr("href");
-			console.log(result);
 			
 			db.Article.create(result)
         	.then(function(thearticle) {
