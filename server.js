@@ -7,8 +7,9 @@ const cheerio = require("cheerio");
 const db = require("./models");
 
 const PORT = process.env.PORT || 3000;
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/doesthisnameevenmatter";
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scraper";
 
+console.log(MONGODB_URI)
 app.use(logger("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -22,10 +23,9 @@ app.get("/getnews", function(req, res)
 	{
 		let $ = cheerio.load(response.data);
 
-		$("div[class='sc-1pw4fyi-0']").each(function(i, element)
+		$("div.sc-1pw4fyi-0").each(function(i, element)
 		{
 			let result = {};
-
 			result.title = $(this)
         		.children("a")
         		.text();
