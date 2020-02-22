@@ -23,23 +23,24 @@ app.get("/getnews", function(req, res)
 	{
 		let $ = cheerio.load(response.data);
 	
-		$("div.sc-1pw4fyi-0").each(function(i, element)
+		$("article div a").each(function(i, element)
 		{
-			let result = {};
-			result.title = $(this)
-        		.children("a")
-        		.text();
-			result.link = $(this)
-        		.children("a")
-        		.attr("href");
 			
-			db.Article.create(result)
-        	.then(function(thearticle) {
-        		console.log(thearticle);
-        	})
-        	.catch(function(err) {
-        		console.log(err);
-        	});
+			if($(this).text().length > 23)
+			{
+				let result = {};
+
+				result.title = $(this).text();
+				result.link = $(this).attr("href");
+
+				db.Article.create(result)
+				.then(function(thearticle) {
+					console.log(thearticle);
+				})
+				.catch(function(err) {
+					console.log(err);
+				});
+			}
 		});
 		res.send("Scrape Complete");
 	});
