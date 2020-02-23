@@ -9,7 +9,6 @@ const db = require("./models");
 const PORT = process.env.PORT || 3000;
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scraper";
 
-console.log(MONGODB_URI)
 app.use(logger("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -52,6 +51,19 @@ app.get("/newses", function(req, res)
 	.then(function(thearticles)
 	{
 		res.json(thearticles);
+	})
+	.catch(function(err)
+	{
+		res.json(err);
+	});
+});
+
+app.get("/clearnews", function(req, res)
+{
+	db.Article.remove({})
+	.then(function(article)
+	{
+		res.send("Articles Cleared");
 	})
 	.catch(function(err)
 	{
